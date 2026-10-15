@@ -19,32 +19,16 @@
 				<section id="header">
 
 					<!-- Logo -->
-						<h1><a href="index.html">Plantas Edén</a></h1>
+						<h1><a href="/home">Plantas Edén</a></h1>
 
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li class="current"><a href="index.html">Home</a></li>
-								<li>
-									<a href="#">Tienda</a>
-									<ul>
-										<li><a href="#">Plantas de interior</a></li>
-										<li><a href="#">Plantas de exterior</a></li>
-										<li><a href="#">Macetas</a></li>
-										<li>
-											<a href="#">Semillas de temporada</a>
-											<ul>
-												<li><a href="#">Semillas para otoño</a></li>
-												<li><a href="#">Semillas para invierno</a></li>
-												<li><a href="#">Semillas para primavera</a></li>
-												<li><a href="#">Semillas para verano</a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li><a href="left-sidebar.html">Blog</a></li>
-								<li><a href="right-sidebar.html">Reseñas</a></li>
-								<li><a href="no-sidebar.html">Contacto</a></li>
+								<li class="current"><a href="/home">Home</a></li>
+								<li><a href="/about">About</a></li>
+								<li><a href="/blog">Blog</a></li>
+								<li><a href="/gallery">Gallery</a></li>
+								<li><a href="/contact">Contacto</a></li>
 							</ul>
 						</nav>
 
@@ -90,7 +74,7 @@
 							<footer>
 								<ul class="actions">
 									<li><a href="#" class="button large">Ver semillas</a></li>
-									<li><a href="#" class="button alt large">Blog</a></li>
+									<li><a href="/blog" class="button alt large">Blog</a></li>
 								</ul>
 							</footer>
 						</section>
@@ -111,7 +95,7 @@
 										<div class="row">
 											<div class="col-4 col-6-medium col-12-small">
 												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="{% static 'core/images/pic02.jpg' %}" alt="" /></a>
 													<header>
 														<h3>Lavanda</h3>
 													</header>
@@ -125,7 +109,7 @@
 											</div>
 											<div class="col-4 col-6-medium col-12-small">
 												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="{% static 'core/images/pic03.jpg' %}" alt="" /></a>
 													<header>
 														<h3>Albahaca</h3>
 													</header>
@@ -139,7 +123,7 @@
 											</div>
 											<div class="col-4 col-6-medium col-12-small">
 												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="{% static 'core/images/pic04.jpg' %}" alt="" /></a>
 													<header>
 														<h3>Aloe Vera</h3>
 													</header>
@@ -153,7 +137,7 @@
 											</div>
 											<div class="col-4 col-6-medium col-12-small">
 												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="{% static 'core/images/pic05.jpg' %}" alt="" /></a>
 													<header>
 														<h3>Romero</h3>
 													</header>
@@ -167,7 +151,7 @@
 											</div>
 											<div class="col-4 col-6-medium col-12-small">
 												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="{% static 'core/images/pic06.jpg' %}""images/pic06.jpg" alt="" /></a>
 													<header>
 														<h3>Helecho Boston</h3>
 													</header>
@@ -181,7 +165,7 @@
 											</div>
 											<div class="col-4 col-6-medium col-12-small">
 												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic07.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="{% static 'core/images/pic07.jpg' %}" alt="" /></a>
 													<header>
 														<h3>Girasol</h3>
 													</header>
@@ -207,7 +191,7 @@
 										<div class="row">
 											<div class="col-6 col-12-small">
 												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="{% static 'core/images/pic08.jpg' %}" alt="" /></a>
 													<header>
 														<h3>Lavanda</h3>
 														<p>Publicado hace 45 minutos</p>
@@ -223,7 +207,7 @@
 											</div>
 											<div class="col-6 col-12-small">
 												<section class="box">
-													<a href="#" class="image featured"><img src="images/pic09.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="{% static 'core/images/pic09.jpg' %}" alt="" /></a>
 													<header>
 														<h3>Girasol</h3>
 														<p>Publicado hace 45 minutos</p>
@@ -288,7 +272,7 @@
 									<header>
 										<h2>¿De que trata este negocio?</h2>
 									</header>
-									<a href="#" class="image featured"><img src="images/pic10.jpg" alt="" /></a>
+									<a href="#" class="image featured"><img src="{% static 'core/images/pic10.jpg' %}" alt="" /></a>
 									<p>
 										<strong>Plantas Edén</strong> es una pyme dedicada a las plantas
 										. Vendemos desde brotes de exterior, hasta semillas por temporadas. Ofrecemos distintos eventos para generas ambientes de comunidad y compartir nuestros gustos por las plantas
@@ -374,12 +358,12 @@
 		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="{% static 'core/assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'core/assets/js/jquery.dropotron.min.js' %}"></script>
+			<script src="{% static 'core/assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'core/assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'core/assets/js/util.js' %}"></script>
+			<script src="{% static 'core/assets/js/main.js' %}"></script>
 
 	</body>
 </html>
