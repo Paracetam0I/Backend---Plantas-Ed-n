@@ -23,7 +23,7 @@ from blog import views as views_blog
 from gallery import views as views_gallery
 
 urlpatterns = [
-    path('/', views_core.home, name="home"),
+    path('', views_core.home, name="home"),
     path('admin/', admin.site.urls),
     path('about/', views_about.about, name="about"),
     path('contact/', views_contact.contact, name="contact"),
