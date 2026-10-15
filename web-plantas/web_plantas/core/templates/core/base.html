@@ -1,0 +1,210 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Dopetrope by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="es">
+	<head>
+		<title>Plantas Edén | {% block title %}Inicio{% endblock %}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Plantas Edén: plantas de interior y exterior, macetas y semillas de temporada en Santiago de Chile." />
+		<link rel="stylesheet" href="{% static 'core/assets/css/main.css' %}" />
+		{% block extra_head %}{% endblock %}
+	</head>
+	{# La clase del body define el layout de Dopetrope: homepage / left-sidebar / right-sidebar / no-sidebar #}
+	<body class="{% block body_class %}no-sidebar{% endblock %} is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+
+					<!-- Logo -->
+						<h1><a href="{% url 'home' %}">Plantas Edén</a></h1>
+
+					<!-- Nav -->
+						{# Se marca como "current" el ítem cuyo nombre de URL coincide con la vista actual #}
+						{% with actual=request.resolver_match.url_name %}
+						<nav id="nav">
+							<ul>
+								<li{% if actual == 'home' %} class="current"{% endif %}><a href="{% url 'home' %}">Home</a></li>
+								<li>
+									<a href="{% url 'gallery' %}">Tienda</a>
+									<ul>
+										<li><a href="{% url 'gallery' %}#interior">Plantas de interior</a></li>
+										<li><a href="{% url 'gallery' %}#exterior">Plantas de exterior</a></li>
+										<li><a href="{% url 'gallery' %}#macetas">Macetas</a></li>
+										<li>
+											<a href="{% url 'gallery' %}#semillas">Semillas de temporada</a>
+											<ul>
+												<li><a href="{% url 'gallery' %}#semillas-otono">Semillas para otoño</a></li>
+												<li><a href="{% url 'gallery' %}#semillas-invierno">Semillas para invierno</a></li>
+												<li><a href="{% url 'gallery' %}#semillas-primavera">Semillas para primavera</a></li>
+												<li><a href="{% url 'gallery' %}#semillas-verano">Semillas para verano</a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li{% if actual == 'blog' %} class="current"{% endif %}><a href="{% url 'blog' %}">Blog</a></li>
+								<li{% if actual == 'gallery' %} class="current"{% endif %}><a href="{% url 'gallery' %}">Galería</a></li>
+								<li{% if actual == 'about' %} class="current"{% endif %}><a href="{% url 'about' %}">Nosotros</a></li>
+								<li{% if actual == 'contact' %} class="current"{% endif %}><a href="{% url 'contact' %}">Contacto</a></li>
+							</ul>
+						</nav>
+						{% endwith %}
+
+					{# Banner e intro: solo los define la portada (index.html) #}
+					{% block header_extra %}{% endblock %}
+
+				</section>
+
+			<!-- Main -->
+				<section id="main">
+					<div class="container">
+						{% block content %}{% endblock %}
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<section id="footer">
+					<div class="container">
+						<div class="row">
+							<div class="col-8 col-12-medium">
+								<section>
+									<header>
+										<h2>Nuestros eventos</h2>
+									</header>
+									<ul class="dates">
+										<li>
+											<span class="date">Nov <strong>27</strong></span>
+											<h3><a href="{% url 'contact' %}">Live: Riego Inteligente en Verano</a></h3>
+											<p>Descubre los horarios óptimos y técnicas para mantener tus plantas hidratadas sin desperdiciar agua durante las olas de calor.</p>
+										</li>
+										<li>
+											<span class="date">Nov <strong>23</strong></span>
+											<h3><a href="{% url 'contact' %}">Taller Online: Esquejes de Éxito</a></h3>
+											<p>Aprende a multiplicar tus plantas favoritas por esqueje con tasas de supervivencia del 90% usando herramientas caseras.</p>
+										</li>
+										<li>
+											<span class="date">Nov <strong>15</strong></span>
+											<h3><a href="{% url 'contact' %}">Charla con Expertos: Plagas de Verano</a></h3>
+											<p>Identifica y combate naturalmente los pulgones, cochinillas y ácaros que aparecen con el calor. Sesión de preguntas incluida.</p>
+										</li>
+										<li>
+											<span class="date">Nov <strong>12</strong></span>
+											<h3><a href="{% url 'contact' %}">Encuentro Presencial: Mercado de Plantas</a></h3>
+											<p>Feria de productores locales con especies de interior y exterior. Talleres de jardinería urbana durante todo el día.</p>
+										</li>
+										<li>
+											<span class="date">Nov <strong>10</strong></span>
+											<h3><a href="{% url 'contact' %}">Demo en Vivo: Creación de Terrarios</a></h3>
+											<p>Paso a paso para construir un ecosistema cerrado en cristal que sobreviva años sin riego. Lista de materiales incluida.</p>
+										</li>
+									</ul>
+								</section>
+							</div>
+							<div class="col-4 col-12-medium">
+								<section>
+									<header>
+										<h2>¿De qué trata este negocio?</h2>
+									</header>
+									<a href="{% url 'about' %}" class="image featured"><img src="{% static 'core/images/vivero.jpg' %}" alt="Invernadero con plantas en flor listas para la venta" /></a>
+									<p>
+										<strong>Plantas Edén</strong> es una pyme chilena dedicada a las plantas. Vendemos desde plantas de interior
+										y exterior hasta macetas y semillas de temporada. Organizamos eventos para generar comunidad y compartir
+										nuestro gusto por las plantas, y publicamos datos y consejos de cuidado en nuestro blog.
+									</p>
+									<footer>
+										<ul class="actions">
+											<li><a href="{% url 'about' %}" class="button">Conócenos</a></li>
+										</ul>
+									</footer>
+								</section>
+							</div>
+							<div class="col-4 col-6-medium col-12-small">
+								<section>
+									<header>
+										<h2>Links de interés</h2>
+									</header>
+									<ul class="divided">
+										<li><a href="{% url 'blog' %}">Guías de cuidado y consejos en nuestro blog</a></li>
+										<li><a href="{% url 'gallery' %}#interior">Catálogo de plantas de interior</a></li>
+										<li><a href="{% url 'gallery' %}#exterior">Catálogo de plantas de exterior</a></li>
+										<li><a href="{% url 'gallery' %}#semillas">Calendario de semillas de temporada</a></li>
+									</ul>
+								</section>
+							</div>
+							<div class="col-4 col-6-medium col-12-small">
+								<section>
+									<header>
+										<h2>Sitios recomendados</h2>
+									</header>
+									<ul class="divided">
+										<li><a href="https://www.conaf.cl" target="_blank" rel="noopener">CONAF: Corporación Nacional Forestal</a></li>
+										<li><a href="https://www.sag.gob.cl" target="_blank" rel="noopener">SAG: Servicio Agrícola y Ganadero</a></li>
+										<li><a href="https://www.inia.cl" target="_blank" rel="noopener">INIA: Investigación agropecuaria en Chile</a></li>
+										<li><a href="https://mma.gob.cl" target="_blank" rel="noopener">Ministerio del Medio Ambiente</a></li>
+									</ul>
+								</section>
+							</div>
+							<div class="col-4 col-12-medium">
+								<section>
+									<header>
+										<h2>Redes sociales</h2>
+									</header>
+									<ul class="social">
+										{# Enlaces a las páginas principales de cada red (el negocio es ficticio y no tiene cuentas propias) #}
+										<li><a class="icon brands fa-instagram" href="https://www.instagram.com/" target="_blank" rel="noopener"><span class="label">Instagram</span></a></li>
+										<li><a class="icon brands fa-facebook-f" href="https://www.facebook.com/" target="_blank" rel="noopener"><span class="label">Facebook</span></a></li>
+										<li><a class="icon brands fa-tiktok" href="https://www.tiktok.com/" target="_blank" rel="noopener"><span class="label">TikTok</span></a></li>
+										<li><a class="icon brands fa-youtube" href="https://www.youtube.com/" target="_blank" rel="noopener"><span class="label">YouTube</span></a></li>
+										<li><a class="icon brands fa-whatsapp" href="https://www.whatsapp.com/" target="_blank" rel="noopener"><span class="label">WhatsApp</span></a></li>
+									</ul>
+									<ul class="contact">
+										<li>
+											<h3>Dirección</h3>
+											<p>
+												Plantas Edén<br />
+												Av. Pedro de Valdivia 1215<br />
+												Providencia, Santiago
+											</p>
+										</li>
+										<li>
+											<h3>Correo</h3>
+											<p><a href="mailto:contacto@plantaseden.cl">contacto@plantaseden.cl</a></p>
+										</li>
+										<li>
+											<h3>Teléfono</h3>
+											<p><a href="tel:+56223456789">+56 2 2345 6789</a></p>
+										</li>
+									</ul>
+								</section>
+							</div>
+							<div class="col-12">
+
+								<!-- Copyright -->
+									<div id="copyright">
+										<ul class="links">
+											<li>&copy; Plantas Edén. Todos los derechos reservados.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li><li><a href="{% url 'about' %}#creditos">Créditos de imágenes</a></li>
+										</ul>
+									</div>
+
+							</div>
+						</div>
+					</div>
+				</section>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'core/assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'core/assets/js/jquery.dropotron.min.js' %}"></script>
+			<script src="{% static 'core/assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'core/assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'core/assets/js/util.js' %}"></script>
+			<script src="{% static 'core/assets/js/main.js' %}"></script>
+
+	</body>
+</html>

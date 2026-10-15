@@ -59,7 +59,9 @@ cover/
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
+# db.sqlite3 NO se ignora: la base de datos (10 publicaciones del blog y el superusuario root)
+# debe entregarse junto al proyecto para la evaluación.
+# db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
