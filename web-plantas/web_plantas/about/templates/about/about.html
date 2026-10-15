@@ -1,220 +1,126 @@
-<!DOCTYPE HTML>
-<!--
-	Dopetrope by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Dopetrope by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="no-sidebar is-preload">
-		<div id="page-wrapper">
+{% extends 'core/base.html' %}
+{% load static %}
 
-			<!-- Header -->
-				<section id="header">
+{% block title %}Nosotros{% endblock %}
 
-					<!-- Logo -->
-						<h1><a href="index.html">Dopetrope</a></h1>
+{% block body_class %}no-sidebar{% endblock %}
 
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li><a href="index.html">Home</a></li>
-								<li>
-									<a href="#">Dropdown</a>
-									<ul>
-										<li><a href="#">Lorem ipsum dolor</a></li>
-										<li><a href="#">Magna phasellus</a></li>
-										<li><a href="#">Etiam dolore nisl</a></li>
-										<li>
-											<a href="#">Phasellus consequat</a>
-											<ul>
-												<li><a href="#">Magna phasellus</a></li>
-												<li><a href="#">Etiam dolore nisl</a></li>
-												<li><a href="#">Veroeros feugiat</a></li>
-												<li><a href="#">Nisl sed aliquam</a></li>
-												<li><a href="#">Dolore adipiscing</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Veroeros feugiat</a></li>
-									</ul>
-								</li>
-								<li><a href="left-sidebar.html">Left Sidebar</a></li>
-								<li><a href="right-sidebar.html">Right Sidebar</a></li>
-								<li class="current"><a href="no-sidebar.html">No Sidebar</a></li>
-							</ul>
-						</nav>
+{% block extra_head %}
+		<style>
+			/* Créditos de imágenes: texto más pequeño y discreto */
+			.creditos { font-size: 0.85em; }
+			.creditos ul.divided li { padding: 0.35em 0; }
+		</style>
+{% endblock %}
 
-				</section>
-
-			<!-- Main -->
-				<section id="main">
-					<div class="container">
-
+{% block content %}
 						<!-- Content -->
 							<article class="box post">
-								<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+								<span class="image featured"><img src="{% static 'about/images/invernadero.jpg' %}" alt="Interior de un invernadero con mesones de suculentas, palmas y cítricos" /></span>
 								<header>
-									<h2>ABOUT</h2>
-									<p>Lorem ipsum dolor sit amet feugiat</p>
+									<h2>Nosotros</h2>
+									<p>Cultivando hogares más verdes desde 2018</p>
 								</header>
-								<p>
-Estamos disponibles para resolver tus consultas sobre cuidados de plantas, pedidos, envíos o colaboraciones. Ya sea que necesites ayuda para identificar una especie, 
-asesoramiento sobre riego o información sobre disponibilidad de productos, nuestro equipo de expertos está listo para asistirte. Completa el formulario adjunto o escríbenos
- directamente al correo que aparece a continuación. Nos comprometemos a responderte en un plazo máximo de 24 horas durante días laborables. Horario de atención: Lunes a Viernes
- de 9:00 a 18:00. Para urgencias relacionadas con envíos, por favor indica tu número de pedido en el asunto del
-
-
+								<section>
+									<header>
+										<h3>Nuestra historia</h3>
+									</header>
+									<p>
+										Plantas Edén nació en 2018 como un pequeño vivero familiar en el patio de una casa en Ñuñoa, donde vendíamos
+										esquejes y almácigos a vecinos y amigos. El interés por llenar departamentos y terrazas de verde creció rápido,
+										y en 2021 abrimos nuestra tienda en Providencia, con un invernadero propio donde aclimatamos cada planta antes
+										de que llegue a su nuevo hogar.
+									</p>
+									<p>
+										Hoy somos una pyme de seis personas que ofrece plantas de interior y exterior, macetas y semillas de temporada,
+										además de talleres, charlas y ferias que reúnen a una comunidad cada vez más grande de amantes de las plantas.
+									</p>
+								</section>
+								<section>
+									<header>
+										<h3>Misión</h3>
+									</header>
+									<p>
+										Acercar la naturaleza a cada hogar entregando plantas sanas, productos de calidad y asesoría honesta, para que
+										cualquier persona, tenga o no experiencia, pueda disfrutar del cuidado de sus plantas.
+									</p>
+								</section>
+								<section>
+									<header>
+										<h3>Visión</h3>
+									</header>
+									<p>
+										Ser el vivero urbano de referencia en Santiago, reconocido por su comunidad, por promover la jardinería sustentable
+										y por difundir el conocimiento sobre el cultivo de plantas adaptadas a nuestro clima.
+									</p>
+								</section>
+								<section>
+									<header>
+										<h3>Nuestros valores</h3>
+									</header>
+									<ul class="divided">
+										<li><strong>Cuidado:</strong> cada planta se riega, revisa y aclimata en nuestro invernadero antes de la venta.</li>
+										<li><strong>Sustentabilidad:</strong> usamos sustratos libres de turba, reutilizamos macetas y promovemos el riego eficiente.</li>
+										<li><strong>Cercanía:</strong> te acompañamos después de la compra con consejos personalizados.</li>
+										<li><strong>Comunidad:</strong> compartimos lo que sabemos a través de eventos, talleres y nuestro blog.</li>
+									</ul>
+								</section>
+								<section>
+									<header>
+										<h3>Nuestro equipo</h3>
+									</header>
+									<div class="row">
+										<div class="col-3 col-6-medium col-12-small">
+											<h4>Valentina Soto</h4>
+											<p>Fundadora y paisajista. Diseña los jardines y terrazas que asesoramos y dirige nuestros talleres.</p>
+										</div>
+										<div class="col-3 col-6-medium col-12-small">
+											<h4>Matías Fuentes</h4>
+											<p>Encargado de vivero. Cuida la producción de almácigos y la aclimatación de cada planta.</p>
+										</div>
+										<div class="col-3 col-6-medium col-12-small">
+											<h4>Camila Rojas</h4>
+											<p>Atención al cliente y envíos. Responde tus consultas y coordina cada despacho.</p>
+										</div>
+										<div class="col-3 col-6-medium col-12-small">
+											<h4>Ignacio Muñoz</h4>
+											<p>Huerta y semillas. Prepara nuestro calendario de siembra y escribe las guías de cultivo del blog.</p>
+										</div>
+									</div>
+								</section>
+								<footer>
+									<ul class="actions">
+										<li><a href="{% url 'gallery' %}" class="button">Ver catálogo</a></li>
+										<li><a href="{% url 'contact' %}" class="button alt">Contáctanos</a></li>
+									</ul>
+								</footer>
 							</article>
 
-					</div>
-				</section>
-
-			<!-- Footer -->
-				<section id="footer">
-					<div class="container">
-						<div class="row">
-							<div class="col-8 col-12-medium">
-								<section>
-									<header>
-										<h2>Blandit nisl adipiscing</h2>
-									</header>
-									<ul class="dates">
-										<li>
-											<span class="date">Jan <strong>27</strong></span>
-											<h3><a href="#">Lorem dolor sit amet veroeros</a></h3>
-											<p>Ipsum dolor sit amet veroeros consequat blandit ipsum phasellus lorem consequat etiam.</p>
-										</li>
-										<li>
-											<span class="date">Jan <strong>23</strong></span>
-											<h3><a href="#">Ipsum sed blandit nisl consequat</a></h3>
-											<p>Blandit phasellus lorem ipsum dolor tempor sapien tortor hendrerit adipiscing feugiat lorem.</p>
-										</li>
-										<li>
-											<span class="date">Jan <strong>15</strong></span>
-											<h3><a href="#">Magna tempus lorem feugiat</a></h3>
-											<p>Dolore consequat sed phasellus lorem sed etiam nullam dolor etiam sed amet sit consequat.</p>
-										</li>
-										<li>
-											<span class="date">Jan <strong>12</strong></span>
-											<h3><a href="#">Dolore tempus ipsum feugiat nulla</a></h3>
-											<p>Feugiat lorem dolor sed nullam tempus lorem ipsum dolor sit amet nullam consequat.</p>
-										</li>
-										<li>
-											<span class="date">Jan <strong>10</strong></span>
-											<h3><a href="#">Blandit tempus aliquam?</a></h3>
-											<p>Feugiat sed tempus blandit tempus adipiscing nisl lorem ipsum dolor sit amet dolore.</p>
-										</li>
-									</ul>
-								</section>
-							</div>
-							<div class="col-4 col-12-medium">
-								<section>
-									<header>
-										<h2>What's this all about?</h2>
-									</header>
-									<a href="#" class="image featured"><img src="images/pic10.jpg" alt="" /></a>
-									<p>
-										This is <strong>Dopetrope</strong> a free, fully responsive HTML5 site template by
-										<a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net/">HTML5 UP</a> It's released for free under
-										the <a href="http://html5up.net/license/">Creative Commons Attribution</a> license so feel free to use it for any personal or commercial project &ndash; just don't forget to credit us!
-									</p>
-									<footer>
-										<ul class="actions">
-											<li><a href="#" class="button">Find out more</a></li>
-										</ul>
-									</footer>
-								</section>
-							</div>
-							<div class="col-4 col-6-medium col-12-small">
-								<section>
-									<header>
-										<h2>Tempus consequat</h2>
-									</header>
-									<ul class="divided">
-										<li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
-										<li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
-										<li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
-										<li><a href="#">Hendrerit tortor vitae mattis tempor sapien</a></li>
-										<li><a href="#">Sem feugiat sapien id suscipit magna felis nec</a></li>
-										<li><a href="#">Elit class aptent taciti sociosqu ad litora</a></li>
-									</ul>
-								</section>
-							</div>
-							<div class="col-4 col-6-medium col-12-small">
-								<section>
-									<header>
-										<h2>Ipsum et phasellus</h2>
-									</header>
-									<ul class="divided">
-										<li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
-										<li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
-										<li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
-										<li><a href="#">Hendrerit tortor vitae mattis tempor sapien</a></li>
-										<li><a href="#">Sem feugiat sapien id suscipit magna felis nec</a></li>
-										<li><a href="#">Elit class aptent taciti sociosqu ad litora</a></li>
-									</ul>
-								</section>
-							</div>
-							<div class="col-4 col-12-medium">
-								<section>
-									<header>
-										<h2>Vitae tempor lorem</h2>
-									</header>
-									<ul class="social">
-										<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
-										<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-										<li><a class="icon brands fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
-										<li><a class="icon brands fa-tumblr" href="#"><span class="label">Tumblr</span></a></li>
-										<li><a class="icon brands fa-linkedin-in" href="#"><span class="label">LinkedIn</span></a></li>
-									</ul>
-									<ul class="contact">
-										<li>
-											<h3>Address</h3>
-											<p>
-												Untitled Incorporated<br />
-												1234 Somewhere Road Suite<br />
-												Nashville, TN 00000-0000
-											</p>
-										</li>
-										<li>
-											<h3>Mail</h3>
-											<p><a href="#">someone@untitled.tld</a></p>
-										</li>
-										<li>
-											<h3>Phone</h3>
-											<p>(800) 000-0000</p>
-										</li>
-									</ul>
-								</section>
-							</div>
-							<div class="col-12">
-
-								<!-- Copyright -->
-									<div id="copyright">
-										<ul class="links">
-											<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-										</ul>
-									</div>
-
-							</div>
-						</div>
-					</div>
-				</section>
-
-		</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
-</html>
+						<!-- Créditos de imágenes -->
+							{# Atribución obligatoria de las fotos con licencia CC BY / CC BY-SA (enlazada desde el footer) #}
+							<section id="creditos" class="box creditos">
+								<header>
+									<h3>Créditos de imágenes</h3>
+								</header>
+								<p>
+									Fotografías obtenidas de Wikimedia Commons y utilizadas según sus licencias Creative Commons.
+									Las imágenes fueron redimensionadas para el sitio.
+								</p>
+								<ul class="divided">
+									<li><a href="https://commons.wikimedia.org/wiki/File:Succulents_in_Green_Paradise_plant_shop.jpg" target="_blank" rel="noopener">Succulents in Green Paradise plant shop.jpg</a>, de GeoO, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> (Nosotros).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Greenhouse_Nursery_Picture.jpg" target="_blank" rel="noopener">Greenhouse Nursery Picture.jpg</a>, de Chrisdlink, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> (pie de página).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Human%26plants_life.jpg" target="_blank" rel="noopener">Human&amp;plants life.jpg</a>, de JuliaWasniewska21, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> (Blog).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Monstera_deliciosa_DSC02605.jpg" target="_blank" rel="noopener">Monstera deliciosa DSC02605.jpg</a>, de Smatu, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> (Blog: publicación sobre la monstera).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:HK_SW_Leaves_with_holes.JPG" target="_blank" rel="noopener">HK SW Leaves with holes.JPG</a>, de Princesleaf, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a> (Galería: Monstera).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Spider_Plant_(Chlorophytum_Comosum).jpg" target="_blank" rel="noopener">Spider Plant (Chlorophytum Comosum).jpg</a>, de S.samsamyang, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (Galería: Cinta).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Hydrangea_macrophylla_-_Hortensia_hydrangea.jpg" target="_blank" rel="noopener">Hydrangea macrophylla - Hortensia hydrangea.jpg</a>, de Raul654, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a> (Galería: Hortensia).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Lots_of_pots_-_geograph.org.uk_-_1293889.jpg" target="_blank" rel="noopener">Lots of pots - geograph.org.uk - 1293889.jpg</a>, de Jonathan Billinger, <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener">CC BY-SA 2.0</a> (Galería: Macetas de greda).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Hanging_terracotta_flower_pots_with_succulents_Arta_Mallorca.jpg" target="_blank" rel="noopener">Hanging terracotta flower pots with succulents Arta Mallorca.jpg</a>, de Steffen Mokosch, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> (Galería: Macetas colgantes).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Sunflower_seeds._img_005.jpg" target="_blank" rel="noopener">Sunflower seeds. img 005.jpg</a>, de Dmitry Makeev, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> (Galería: Semillas de girasol).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Plants_in_seed_tray_2.jpg" target="_blank" rel="noopener">Plants in seed tray 2.jpg</a>, de Pascal Kings, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (Galería: Almácigos).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Plant_Shop_(31829366850).jpg" target="_blank" rel="noopener">Plant Shop (31829366850).jpg</a>, de RubyGoes, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>, recortada (Contacto).</li>
+									<li><a href="https://commons.wikimedia.org/wiki/File:Lettuce_Plugs.JPG" target="_blank" rel="noopener">Lettuce Plugs.JPG</a>, de Apapac, dominio público (Blog: semillas de otoño).</li>
+								</ul>
+								<p>Diseño basado en una plantilla de <a href="https://html5up.net" target="_blank" rel="noopener">HTML5 UP</a>, licencia <a href="https://html5up.net/license" target="_blank" rel="noopener">CCA 3.0</a>.</p>
+							</section>
+{% endblock %}

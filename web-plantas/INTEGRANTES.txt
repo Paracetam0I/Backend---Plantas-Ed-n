@@ -1,0 +1,14 @@
+PROYECTO: Plantas Edén — Sitio web en Django
+Sección/Asignatura: Programación Back End — Evaluación 2
+
+Integrante 1
+  Nombre(s):
+  Apellidos completos:
+
+Integrante 2
+  Nombre(s):
+  Apellidos completos:
+
+Integrante 3
+  Nombre(s):
+  Apellidos completos:
