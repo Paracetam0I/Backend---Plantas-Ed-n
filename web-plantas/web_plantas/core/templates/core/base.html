@@ -30,7 +30,7 @@
 						<nav id="nav">
 							<ul>
 								<li{% if actual == 'home' %} class="current"{% endif %}><a href="{% url 'home' %}">Home</a></li>
-								<li>
+								<li{% if actual == 'gallery' %} class="current"{% endif %}>
 									<a href="{% url 'gallery' %}">Tienda</a>
 									<ul>
 										<li><a href="{% url 'gallery' %}#interior">Plantas de interior</a></li>
@@ -48,7 +48,6 @@
 									</ul>
 								</li>
 								<li{% if actual == 'blog' %} class="current"{% endif %}><a href="{% url 'blog' %}">Blog</a></li>
-								<li{% if actual == 'gallery' %} class="current"{% endif %}><a href="{% url 'gallery' %}">Galería</a></li>
 								<li{% if actual == 'about' %} class="current"{% endif %}><a href="{% url 'about' %}">Nosotros</a></li>
 								<li{% if actual == 'contact' %} class="current"{% endif %}><a href="{% url 'contact' %}">Contacto</a></li>
 							</ul>
