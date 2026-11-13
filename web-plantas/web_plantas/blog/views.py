@@ -26,8 +26,8 @@ def blog(request):
     return render(request, "blog/blog.html", {'posts': posts, 'categories': categories})
 
 
-# Vista de una categoría. category_id llega desde la URL: /category/2/ -> category_id = "2"
-# (el nombre del parámetro debe coincidir con <category_id> en urls.py, si no -> TypeError).
+# Vista de una categoría. category_id llega desde la URL: /category/2/ -> category_id = 2 (entero, por el "int:" de la ruta)
+# (el nombre del parámetro debe coincidir con <int:category_id> en urls.py, si no -> TypeError).
 def category(request, category_id):
     # Busca la categoría por id; si no existe (ej. /category/99/) responde 404 "Página no encontrada".
     category = get_object_or_404(Category, id=category_id)

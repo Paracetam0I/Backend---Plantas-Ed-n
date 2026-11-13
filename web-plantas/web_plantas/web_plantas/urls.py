@@ -20,9 +20,11 @@ urlpatterns = [
     path('about/', views_about.about, name="about"),             # Nosotros
     path('contact/', views_contact.contact, name="contact"),     # Contacto
     path('blog/', views_blog.blog, name="blog"),                 # Blog dinámico (lee de la BD y pagina)
-    # <category_id> captura el trozo de la URL y lo pasa a la vista como argumento: /category/2/ -> category_id="2".
+    # <int:category_id> captura el trozo de la URL, lo convierte a entero y lo pasa a la vista: /category/2/ -> category_id=2.
+    # "int:" hace que solo calcen números: /category/abc/ no coincide con ninguna ruta y da 404.
+    # Sin "int:" (como el ejemplo de clase) "abc" llegaría a get_object_or_404 y el id no numérico causaría un error 500.
     # En la plantilla se arma con {% url 'category' c.id %}.
-    path('category/<category_id>/', views_blog.category, name="category"),  # Posts de una categoría
+    path('category/<int:category_id>/', views_blog.category, name="category"),  # Posts de una categoría
     path('gallery/', views_gallery.gallery, name="gallery"),     # Tienda (se mantuvo la URL /gallery/)
 ]
 

@@ -247,6 +247,11 @@ class CategoryViewTests(TestCase):
         response = self.client.get(reverse("category", args=[999]))
         self.assertEqual(response.status_code, 404)
 
+    def test_id_no_numerico_da_404(self):
+        # <int:category_id> en urls.py: un id con letras no calza con la ruta (404, no error 500)
+        response = self.client.get("/category/abc/")
+        self.assertEqual(response.status_code, 404)
+
     def test_categoria_sin_posts_muestra_mensaje(self):
         vacia = Category.objects.create(name="Semillas de temporada")
         response = self.client.get(reverse("category", args=[vacia.id]))

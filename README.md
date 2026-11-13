@@ -163,12 +163,12 @@ completan solas; la fecha de publicación parte con el momento actual y se puede
   autores, se asignaron a cada post y se copió `created` en `published`; `0003` quitó la categoría antigua y
   convirtió `author` en ForeignKey.
 - **Vista de categoría**: `category(request, category_id)` con `get_object_or_404`, ruta
-  `category/<category_id>/` y plantilla `blog/category.html`. Cada publicación muestra sus categorías como
+  `category/<int:category_id>/` (un id no numérico da 404) y plantilla `blog/category.html`. Cada publicación muestra sus categorías como
   enlaces, el autor y la fecha en formato corto (`SHORT_DATE_FORMAT`). La lista lateral del blog se genera desde la BD.
 - **Admin**: `PostAdmin` con 7 atributos; `Category`, `Author` y `BusinessInfo` registrados en el panel.
 - **Procesador de contexto**: nueva app `info` con `processors.py`; la dirección, correos, teléfonos y horarios
   dejaron de estar escritos a mano en las plantillas.
-- **Pruebas**: 33 pruebas (`python manage.py test`), incluidas las de la vista de categoría y del procesador.
+- **Pruebas**: 34 pruebas (`python manage.py test`), incluidas las de la vista de categoría y del procesador.
 
 ## Créditos
 
