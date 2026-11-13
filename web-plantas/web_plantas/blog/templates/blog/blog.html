@@ -37,12 +37,13 @@
 										<header>
 											<h3>Categorías</h3>
 										</header>
-										<p>Organizamos nuestras publicaciones en cuatro temas principales:</p>
+										<p>Elige un tema para ver solo sus publicaciones:</p>
+										{# categories viene de la vista (Category.objects.all()): una categoría nueva creada en el panel aparece sola #}
 										<ul class="divided">
-											<li>Plantas de interior</li>
-											<li>Plantas de exterior</li>
-											<li>Semillas de temporada</li>
-											<li>Cuidados y consejos</li>
+											{% for c in categories %}
+											{# {% url 'category' c.id %} arma /category/<id>/ con la ruta name="category" de urls.py #}
+											<li><a href="{% url 'category' c.id %}">{{ c.name }}</a></li>
+											{% endfor %}
 										</ul>
 										<footer>
 											<a href="{% url 'gallery' %}" class="button alt">Ver catálogo</a>
@@ -66,14 +67,19 @@
 											<h2>{{ p.title }}</h2>
 											<p>{{ p.subtitle }}</p>
 										</header>
-										{# get_category_display: método que Django crea por usar choices; muestra "Plantas de interior" en vez de "interior". #}
-										{# Filtro date: j = día sin cero inicial, F = mes en palabras (en español por LANGUAGE_CODE), Y = año; \d\e escapa la palabra "de" #}
+										{# p.author imprime el __str__ del Author relacionado (su nombre). #}
+										{# SHORT_DATE_FORMAT: formato corto del idioma activo (es-cl -> 07/10/2026) #}
 										<p>
 											<span class="icon solid fa-user"></span> {{ p.author }}
 											&nbsp;&middot;&nbsp;
-											<span class="icon solid fa-tag"></span> {{ p.get_category_display }}
-											&nbsp;&middot;&nbsp;
-											<span class="icon solid fa-calendar-alt"></span> {{ p.created|date:"j \d\e F \d\e Y" }}
+											<span class="icon solid fa-calendar-alt"></span> {{ p.published|date:"SHORT_DATE_FORMAT" }}
+										</p>
+										{# p.categories.all recorre las categorías del post (relación ManyToMany); cada una enlaza a su página #}
+										<p>
+											<span class="icon solid fa-tag"></span>
+											{% for c in p.categories.all %}
+											<span><a href="{% url 'category' c.id %}">{{ c.name }}</a>&nbsp;</span>
+											{% endfor %}
 										</p>
 										{# linebreaks convierte los saltos de línea del TextField en párrafos <p> y <br> #}
 										{{ p.content|linebreaks }}
