@@ -24,7 +24,7 @@ pip install -r web-plantas/requirements.txt
 ```
 
 La base de datos SQLite (`web-plantas/web_plantas/db.sqlite3`) se entrega con las migraciones aplicadas, el
-superusuario y 10 publicaciones de ejemplo. Las imágenes de esas publicaciones están en
+superusuario, 10 publicaciones de ejemplo, 4 categorías, 4 autores y los datos del negocio. Las imágenes de esas publicaciones están en
 `web-plantas/web_plantas/media/blog/`.
 
 ## Ejecución
@@ -158,8 +158,8 @@ completan solas; la fecha de publicación parte con el momento actual y se puede
 
 - **Modelos relacionados**: se agregaron `Category` (ManyToMany con `Post`) y `Author` (ForeignKey desde `Post`), y
   el campo `published`. La categoría con `choices` y el autor como texto se reemplazaron por estas relaciones.
-- **Migración de datos**: se hizo en dos pasos para no perder las 11 publicaciones. `0002` creó las tablas nuevas;
-  luego, con el shell de Django (`python manage.py shell`, usando el ORM), se crearon las 4 categorías y los 5
+- **Migración de datos**: se hizo en dos pasos para no perder las publicaciones. `0002` creó las tablas nuevas;
+  luego, con el shell de Django (`python manage.py shell`, usando el ORM), se crearon las 4 categorías y los
   autores, se asignaron a cada post y se copió `created` en `published`; `0003` quitó la categoría antigua y
   convirtió `author` en ForeignKey.
 - **Vista de categoría**: `category(request, category_id)` con `get_object_or_404`, ruta

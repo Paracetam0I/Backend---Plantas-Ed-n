@@ -10,7 +10,7 @@ def blog(request):
     # Es "perezoso": la consulta SQL no se ejecuta aquí, sino cuando el Paginator pide sus filas.
     posts = Post.objects.all()
     # Paginación: 3 publicaciones por página
-    # Con 11 publicaciones quedan 4 páginas (3 + 3 + 3 + 2). Cambiar el 3 cambia cuántas se ven.
+    # Con 10 publicaciones quedan 4 páginas (3 + 3 + 3 + 1). Cambiar el 3 cambia cuántas se ven.
     paginator = Paginator(posts, 3)
     # Lee el número de página de la URL: /blog/?page=2 -> "2". Si no viene, queda None
     page_number = request.GET.get("page")
