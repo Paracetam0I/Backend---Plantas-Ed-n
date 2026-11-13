@@ -1,3 +1,6 @@
+# Pruebas automáticas: se ejecutan con "python manage.py test".
+# Django crea una base de datos temporal vacía para las pruebas (no toca db.sqlite3)
+# y self.client simula un navegador que hace peticiones GET a las URLs.
 import io
 import shutil
 import tempfile
@@ -30,6 +33,7 @@ def tearDownModule():
     shutil.rmtree(MEDIA_TEMPORAL, ignore_errors=True)
 
 
+# Crea y guarda un Post con datos de ejemplo; **extra permite reemplazar cualquier campo
 def crear_post(numero=1, **extra):
     datos = {
         "title": f"Publicación {numero}",
@@ -43,6 +47,7 @@ def crear_post(numero=1, **extra):
     return Post.objects.create(**datos)
 
 
+# Pruebas del modelo Post (campos, fechas automáticas, __str__ y orden)
 @override_settings(MEDIA_ROOT=MEDIA_TEMPORAL)
 class PostModelTests(TestCase):
 
@@ -59,11 +64,13 @@ class PostModelTests(TestCase):
         self.assertGreaterEqual(len(campos), 6)
 
     def test_imagen_se_guarda_en_carpeta_blog(self):
+        # upload_to="blog" -> el archivo queda en MEDIA_ROOT/blog/ y su URL empieza con /media/blog/
         post = crear_post()
         self.assertTrue(post.image.name.startswith("blog/"))
         self.assertTrue(post.image.url.startswith("/media/blog/"))
 
     def test_created_no_cambia_y_updated_si(self):
+        # auto_now_add fija created al crear; auto_now actualiza updated en cada save()
         post = crear_post()
         created_original = post.created
         updated_original = post.updated
@@ -82,6 +89,7 @@ class PostModelTests(TestCase):
         self.assertEqual(str(post), "Cuidados de la lavanda")
 
     def test_orden_por_defecto_mas_reciente_primero(self):
+        # Meta.ordering = ["-created"]: el más nuevo aparece primero
         self.assertEqual(Post._meta.ordering, ["-created"])
         antiguo = crear_post(1)
         nuevo = crear_post(2)
@@ -89,6 +97,7 @@ class PostModelTests(TestCase):
         self.assertEqual(list(Post.objects.all()), [nuevo, antiguo])
 
 
+# Pruebas de la vista /blog/ (plantilla, paginación y contenido mostrado)
 @override_settings(MEDIA_ROOT=MEDIA_TEMPORAL)
 class BlogViewTests(TestCase):
 
@@ -115,6 +124,7 @@ class BlogViewTests(TestCase):
         self.assertIsInstance(response.context["posts"], Page)
 
     def test_paginacion_de_3_por_pagina(self):
+        # 10 publicaciones / 3 por página = 4 páginas (3, 3, 3 y 1)
         response = self.client.get(reverse("blog"))
         posts = response.context["posts"]
         self.assertEqual(posts.paginator.per_page, 3)
@@ -126,6 +136,7 @@ class BlogViewTests(TestCase):
             self.assertContains(response, f"Página {pagina} de 4")
 
     def test_paginas_sin_duplicados_y_ordenadas(self):
+        # Juntando las 4 páginas deben salir las 10 publicaciones, sin repetir y de la 10 a la 1
         todos = []
         for pagina in range(1, 5):
             todos += self.titulos(self.client.get(reverse("blog"), {"page": pagina}))
@@ -133,16 +144,19 @@ class BlogViewTests(TestCase):
         self.assertEqual(todos, esperado)
 
     def test_pagina_invalida_muestra_la_primera(self):
+        # get_page() convierte un valor no numérico en la página 1 (no da error)
         response = self.client.get(reverse("blog"), {"page": "abc"})
         self.assertEqual(response.context["posts"].number, 1)
         self.assertEqual(self.titulos(response)[0], "Publicación 10")
 
     def test_pagina_fuera_de_rango_muestra_la_ultima(self):
+        # get_page() convierte un número demasiado grande en la última página
         response = self.client.get(reverse("blog"), {"page": 99})
         self.assertEqual(response.context["posts"].number, 4)
         self.assertEqual(self.titulos(response), ["Publicación 1"])
 
     def test_enlaces_de_paginacion(self):
+        # En la primera página no hay "Anterior"; en la última no hay "Siguiente"
         primera = self.client.get(reverse("blog"))
         self.assertNotContains(primera, "Anterior")
         self.assertContains(primera, "?page=2")
@@ -168,6 +182,7 @@ class BlogViewTests(TestCase):
         self.assertNotContains(response, "07 de octubre")
 
     def test_blog_vacio_muestra_mensaje(self):
+        # Sin publicaciones se muestra el bloque {% empty %} de la plantilla
         Post.objects.all().delete()
         response = self.client.get(reverse("blog"))
         self.assertEqual(response.status_code, 200)

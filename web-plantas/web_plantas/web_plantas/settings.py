@@ -9,11 +9,15 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
+# settings.py: configuración central del proyecto. Django lo lee al arrancar
+# (lo indica DJANGO_SETTINGS_MODULE en manage.py / wsgi.py / asgi.py).
 
 from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR = carpeta que contiene manage.py (settings.py -> web_plantas/ -> web_plantas/).
+# Se usa para armar rutas absolutas sin depender del computador donde se ejecute.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -21,63 +25,79 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# Clave usada para firmar cookies de sesión, tokens CSRF y contraseñas de reseteo.
+# Si se borra, Django no arranca (ImproperlyConfigured). Si se cambia, se cierran las sesiones abiertas.
 SECRET_KEY = 'django-insecure-3(6hq@cen_0t$m*td9yjjq$4$6&22920=@r#(f_00i%_8*fjt8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True: muestra la página amarilla de errores con detalle y sirve MEDIA/static solo.
+# Con DEBUG = False: hay que llenar ALLOWED_HOSTS, los errores muestran un 404/500 genérico
+# y las imágenes subidas dejan de verse (ver el "if settings.DEBUG" en urls.py).
 DEBUG = True
 
+# Dominios desde los que se acepta el sitio. Vacío + DEBUG=True permite localhost/127.0.0.1.
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
+# Apps activas. Django solo busca modelos, templates, static y admin de las apps listadas aquí.
+# Si se quita una app propia (ej. 'blog'), falla el import en urls.py y su tabla no se migra.
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'core',
-    'blog',
-    'contact',
-    'gallery',
-    'about',
+    'django.contrib.admin',         # Panel de administración (/admin/)
+    'django.contrib.auth',          # Usuarios, contraseñas y permisos (superusuario root)
+    'django.contrib.contenttypes',  # Registro de los modelos; lo necesitan auth y admin
+    'django.contrib.sessions',      # Sesiones: mantiene al usuario logueado en el admin
+    'django.contrib.messages',      # Mensajes de una vez ("Se agregó correctamente...")
+    'django.contrib.staticfiles',   # Habilita {% static %} y sirve CSS/JS/imágenes en desarrollo
+    # Apps propias del proyecto (una por sección del sitio)
+    'core',     # Portada y plantilla base (base.html) + archivos estáticos del template
+    'blog',     # Sección dinámica: modelo Post guardado en la base de datos
+    'contact',  # Página de contacto
+    'gallery',  # Página "Tienda"
+    'about',    # Página "Nosotros"
 ]
 
+# Middleware: capas por las que pasa cada petición (de arriba hacia abajo) y cada respuesta (de abajo hacia arriba).
+# El orden importa: por ejemplo, AuthenticationMiddleware necesita que SessionMiddleware vaya antes.
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',            # Cabeceras de seguridad (HTTPS, etc.)
+    'django.contrib.sessions.middleware.SessionMiddleware',     # Carga la sesión desde la cookie
+    'django.middleware.common.CommonMiddleware',                # Normaliza URLs (agrega "/" final)
+    'django.middleware.csrf.CsrfViewMiddleware',                # Protección CSRF en formularios POST
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Agrega request.user
+    'django.contrib.messages.middleware.MessageMiddleware',     # Habilita los mensajes del admin
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',   # Impide meter el sitio en un <iframe> ajeno
 ]
 
+# Archivo con la lista principal de rutas (urlpatterns)
 ROOT_URLCONF = 'web_plantas.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Motor de plantillas de Django
+        'DIRS': [],         # Carpetas extra de templates (no se usan: cada app trae los suyos)
+        'APP_DIRS': True,   # Busca templates en <app>/templates/. Si fuera False -> TemplateDoesNotExist
         'OPTIONS': {
+            # Variables que se inyectan automáticamente en todas las plantillas
             'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',  # {{ request }}: base.html lo usa para marcar el menú activo
+                'django.contrib.auth.context_processors.auth',  # {{ user }} y {{ perms }}
+                'django.contrib.messages.context_processors.messages',  # {{ messages }}
             ],
         },
     },
 ]
 
+# Punto de entrada para servidores web en producción (ver wsgi.py)
 WSGI_APPLICATION = 'web_plantas.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+# Base de datos SQLite: un solo archivo (db.sqlite3) junto a manage.py, sin servidor aparte.
+# Ahí quedan las publicaciones del blog y el superusuario. Para MySQL/PostgreSQL solo cambia este bloque.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -89,6 +109,8 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
+# Reglas para contraseñas al crear usuarios (similar al usuario, largo mínimo, comunes, solo números).
+# Por eso createsuperuser advierte con "rootroot"; se puede forzar respondiendo "y".
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -108,20 +130,28 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
+# Idioma español de Chile: el admin queda en español y el filtro |date muestra meses en español
 LANGUAGE_CODE = 'es-cl'
 
+# Zona horaria usada al mostrar fechas (created/updated se ven en hora de Chile)
 TIME_ZONE = 'America/Santiago'
 
+# Activa la traducción de textos de Django (admin, mensajes de error)
 USE_I18N = True
 
+# Las fechas se guardan en UTC en la BD y se convierten a TIME_ZONE al mostrarlas
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+# Prefijo de URL para archivos estáticos (los que vienen con el código: CSS, JS, fotos fijas).
+# Django los busca en <app>/static/ y {% static 'core/...' %} arma la ruta /static/core/...
 STATIC_URL = 'static/'
 
 # Archivos subidos desde el Panel de Django (imágenes del blog)
+# MEDIA_URL: prefijo de URL con que se publican (ej: /media/blog/foto.jpg)
 MEDIA_URL = '/media/'
+# MEDIA_ROOT: carpeta física donde se guardan. ImageField(upload_to="blog") -> media/blog/
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

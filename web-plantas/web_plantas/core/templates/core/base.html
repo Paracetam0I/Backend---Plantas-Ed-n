@@ -1,3 +1,7 @@
+{# base.html: plantilla PADRE. Contiene lo que se repite en todas las páginas (head, menú, footer, scripts). #}
+{# Las páginas hijas hacen {% extends 'core/base.html' %} y solo rellenan los {% block %} que necesitan. #}
+{# Si se borra un bloque aquí, lo que las hijas pongan en ese bloque deja de mostrarse (sin error). #}
+{# load static: habilita la etiqueta {% static %}. Sin él, la página falla con TemplateSyntaxError. #}
 {% load static %}
 <!DOCTYPE HTML>
 <!--
@@ -7,11 +11,14 @@
 -->
 <html lang="es">
 	<head>
+		{# block title: cada página pone su nombre; "Inicio" es el valor por defecto si la hija no lo define #}
 		<title>Plantas Edén | {% block title %}Inicio{% endblock %}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="Plantas Edén: plantas de interior y exterior, macetas y semillas de temporada en Santiago de Chile." />
+		{# {% static %} arma la URL /static/core/assets/css/main.css (STATIC_URL + ruta dentro de core/static/) #}
 		<link rel="stylesheet" href="{% static 'core/assets/css/main.css' %}" />
+		{# extra_head: espacio para que una página agregue CSS propio (blog, tienda y nosotros lo usan) #}
 		{% block extra_head %}{% endblock %}
 	</head>
 	{# La clase del body define el layout de Dopetrope: homepage / left-sidebar / right-sidebar / no-sidebar #}
@@ -22,16 +29,20 @@
 				<section id="header">
 
 					<!-- Logo -->
+						{# {% url 'home' %} busca la ruta con name="home" en urls.py y devuelve "/" #}
 						<h1><a href="{% url 'home' %}">Plantas Edén</a></h1>
 
 					<!-- Nav -->
 						{# Se marca como "current" el ítem cuyo nombre de URL coincide con la vista actual #}
+						{# request.resolver_match.url_name = el name de la ruta visitada ('blog', 'about'...). #}
+						{# Requiere el context processor 'request' de settings; {% with %} lo guarda en "actual" para no repetirlo #}
 						{% with actual=request.resolver_match.url_name %}
 						<nav id="nav">
 							<ul>
 								<li{% if actual == 'home' %} class="current"{% endif %}><a href="{% url 'home' %}">Home</a></li>
 								<li{% if actual == 'gallery' %} class="current"{% endif %}>
 									<a href="{% url 'gallery' %}">Tienda</a>
+									{# Submenú desplegable (lo anima jquery.dropotron). Los #ancla saltan a la sección con ese id en gallery.html #}
 									<ul>
 										<li><a href="{% url 'gallery' %}#interior">Plantas de interior</a></li>
 										<li><a href="{% url 'gallery' %}#exterior">Plantas de exterior</a></li>
@@ -62,11 +73,13 @@
 			<!-- Main -->
 				<section id="main">
 					<div class="container">
+						{# block content: aquí se inserta el contenido principal de cada página hija #}
 						{% block content %}{% endblock %}
 					</div>
 				</section>
 
 			<!-- Footer -->
+				{# Footer común a todo el sitio: contenido fijo escrito a mano (no viene de la BD) #}
 				<section id="footer">
 					<div class="container">
 						<div class="row">
@@ -198,6 +211,8 @@
 		</div>
 
 		<!-- Scripts -->
+			{# JS del template Dopetrope: jQuery, menú desplegable (dropotron), detección de navegador/tamaño de pantalla y menú móvil (main.js). #}
+			{# Si se quitan, el sitio sigue cargando pero sin submenús ni menú para celular. #}
 			<script src="{% static 'core/assets/js/jquery.min.js' %}"></script>
 			<script src="{% static 'core/assets/js/jquery.dropotron.min.js' %}"></script>
 			<script src="{% static 'core/assets/js/browser.min.js' %}"></script>

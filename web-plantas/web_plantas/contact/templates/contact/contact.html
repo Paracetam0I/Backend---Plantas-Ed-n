@@ -1,8 +1,12 @@
+{# Página Contacto: contenido estático (escrito aquí, no viene de la BD). #}
+{# extends hereda base.html (menú, footer, CSS); este archivo solo rellena sus bloques. #}
 {% extends 'core/base.html' %}
 {% load static %}
+{# load static no se hereda: cada plantilla que use {% static %} debe cargarlo #}
 
 {% block title %}Contacto{% endblock %}
 
+{# Layout sin barra lateral #}
 {% block body_class %}no-sidebar{% endblock %}
 
 {% block content %}

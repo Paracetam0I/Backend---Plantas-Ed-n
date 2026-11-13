@@ -1,10 +1,15 @@
+{# Página Tienda: contenido estático (escrito aquí, no viene de la BD). #}
+{# extends hereda base.html (menú, footer, CSS); este archivo solo rellena sus bloques. #}
 {% extends 'core/base.html' %}
 {% load static %}
+{# load static no se hereda: cada plantilla que use {% static %} debe cargarlo #}
 
 {% block title %}Tienda{% endblock %}
 
+{# Layout con barra lateral a la derecha #}
 {% block body_class %}right-sidebar{% endblock %}
 
+{# CSS propio de esta página, se inserta en el <head> de base.html #}
 {% block extra_head %}
 		<style>
 			/* Fotos del catálogo con la misma proporción para que las tarjetas queden alineadas */
