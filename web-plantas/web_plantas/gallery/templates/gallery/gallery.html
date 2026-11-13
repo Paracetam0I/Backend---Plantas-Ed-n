@@ -223,11 +223,12 @@
 											<h3>Horario de la tienda</h3>
 										</header>
 										<ul class="divided">
-											<li><strong>Lunes a viernes:</strong> 9:00 a 19:00</li>
-											<li><strong>Sábado:</strong> 10:00 a 17:00</li>
-											<li><strong>Domingo y festivos:</strong> 10:00 a 14:00</li>
+											{# Horario y dirección: datos del negocio desde info/processors.py (mismos que Contacto y el footer) #}
+											<li><strong>Lunes a viernes:</strong> {{ INFO_HORARIO_SEMANA }}</li>
+											<li><strong>Sábado:</strong> {{ INFO_HORARIO_SABADO }}</li>
+											<li><strong>Domingo y festivos:</strong> {{ INFO_HORARIO_DOMINGO }}</li>
 										</ul>
-										<p>Av. Pedro de Valdivia 1215, Providencia, Santiago.</p>
+										<p>{{ INFO_DIRECCION }}.</p>
 									</section>
 									<section class="box">
 										<header>

@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'contact',  # Página de contacto
     'gallery',  # Página "Tienda"
     'about',    # Página "Nosotros"
+    'info',     # Datos del negocio (dirección, correo, teléfono, horario) para todas las páginas
 ]
 
 # Middleware: capas por las que pasa cada petición (de arriba hacia abajo) y cada respuesta (de abajo hacia arriba).
@@ -84,6 +85,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',  # {{ request }}: base.html lo usa para marcar el menú activo
                 'django.contrib.auth.context_processors.auth',  # {{ user }} y {{ perms }}
                 'django.contrib.messages.context_processors.messages',  # {{ messages }}
+                # Procesador propio (info/processors.py): agrega los datos del negocio (INFO_DIRECCION,
+                # INFO_CORREO, etc.) a todas las plantillas. Si se quita, esos datos quedan en blanco en el sitio.
+                'info.processors.ctx_dict',
             ],
         },
     },

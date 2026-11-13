@@ -175,22 +175,24 @@
 										<li><a class="icon brands fa-youtube" href="https://www.youtube.com/" target="_blank" rel="noopener"><span class="label">YouTube</span></a></li>
 										<li><a class="icon brands fa-whatsapp" href="https://www.whatsapp.com/" target="_blank" rel="noopener"><span class="label">WhatsApp</span></a></li>
 									</ul>
+									{# Datos del negocio: vienen de la BD a través del procesador de contexto info/processors.py #}
+									{# (se editan en el panel, en "Datos del negocio"). No hace falta pasarlos desde cada vista. #}
 									<ul class="contact">
 										<li>
 											<h3>Dirección</h3>
 											<p>
 												Plantas Edén<br />
-												Av. Pedro de Valdivia 1215<br />
-												Providencia, Santiago
+												{{ INFO_DIRECCION }}
 											</p>
 										</li>
 										<li>
 											<h3>Correo</h3>
-											<p><a href="mailto:contacto@plantaseden.cl">contacto@plantaseden.cl</a></p>
+											<p><a href="mailto:{{ INFO_CORREO }}">{{ INFO_CORREO }}</a></p>
 										</li>
 										<li>
 											<h3>Teléfono</h3>
-											<p><a href="tel:+56223456789">+56 2 2345 6789</a></p>
+											{# cut:" " quita los espacios para que el enlace tel: quede como +56223456789 #}
+											<p><a href="tel:{{ INFO_TELEFONO|cut:" " }}">{{ INFO_TELEFONO }}</a></p>
 										</li>
 									</ul>
 								</section>
