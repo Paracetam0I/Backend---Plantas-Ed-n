@@ -1,3 +1,7 @@
+{# base.html: plantilla PADRE. Contiene lo que se repite en todas las páginas (head, menú, footer, scripts). #}
+{# Las páginas hijas hacen {% extends 'core/base.html' %} y solo rellenan los {% block %} que necesitan. #}
+{# Si se borra un bloque aquí, lo que las hijas pongan en ese bloque deja de mostrarse (sin error). #}
+{# load static: habilita la etiqueta {% static %}. Sin él, la página falla con TemplateSyntaxError. #}
 {% load static %}
 <!DOCTYPE HTML>
 <!--
@@ -7,11 +11,14 @@
 -->
 <html lang="es">
 	<head>
+		{# block title: cada página pone su nombre; "Inicio" es el valor por defecto si la hija no lo define #}
 		<title>Plantas Edén | {% block title %}Inicio{% endblock %}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="Plantas Edén: plantas de interior y exterior, macetas y semillas de temporada en Santiago de Chile." />
+		{# {% static %} arma la URL /static/core/assets/css/main.css (STATIC_URL + ruta dentro de core/static/) #}
 		<link rel="stylesheet" href="{% static 'core/assets/css/main.css' %}" />
+		{# extra_head: espacio para que una página agregue CSS propio (blog, tienda y nosotros lo usan) #}
 		{% block extra_head %}{% endblock %}
 	</head>
 	{# La clase del body define el layout de Dopetrope: homepage / left-sidebar / right-sidebar / no-sidebar #}
@@ -22,16 +29,20 @@
 				<section id="header">
 
 					<!-- Logo -->
+						{# {% url 'home' %} busca la ruta con name="home" en urls.py y devuelve "/" #}
 						<h1><a href="{% url 'home' %}">Plantas Edén</a></h1>
 
 					<!-- Nav -->
 						{# Se marca como "current" el ítem cuyo nombre de URL coincide con la vista actual #}
+						{# request.resolver_match.url_name = el name de la ruta visitada ('blog', 'about'...). #}
+						{# Requiere el context processor 'request' de settings; {% with %} lo guarda en "actual" para no repetirlo #}
 						{% with actual=request.resolver_match.url_name %}
 						<nav id="nav">
 							<ul>
 								<li{% if actual == 'home' %} class="current"{% endif %}><a href="{% url 'home' %}">Home</a></li>
 								<li{% if actual == 'gallery' %} class="current"{% endif %}>
 									<a href="{% url 'gallery' %}">Tienda</a>
+									{# Submenú desplegable (lo anima jquery.dropotron). Los #ancla saltan a la sección con ese id en gallery.html #}
 									<ul>
 										<li><a href="{% url 'gallery' %}#interior">Plantas de interior</a></li>
 										<li><a href="{% url 'gallery' %}#exterior">Plantas de exterior</a></li>
@@ -47,7 +58,8 @@
 										</li>
 									</ul>
 								</li>
-								<li{% if actual == 'blog' %} class="current"{% endif %}><a href="{% url 'blog' %}">Blog</a></li>
+								{# La página de una categoría es parte del blog, por eso también marca "Blog" #}
+								<li{% if actual == 'blog' or actual == 'category' %} class="current"{% endif %}><a href="{% url 'blog' %}">Blog</a></li>
 								<li{% if actual == 'about' %} class="current"{% endif %}><a href="{% url 'about' %}">Nosotros</a></li>
 								<li{% if actual == 'contact' %} class="current"{% endif %}><a href="{% url 'contact' %}">Contacto</a></li>
 							</ul>
@@ -62,11 +74,13 @@
 			<!-- Main -->
 				<section id="main">
 					<div class="container">
+						{# block content: aquí se inserta el contenido principal de cada página hija #}
 						{% block content %}{% endblock %}
 					</div>
 				</section>
 
 			<!-- Footer -->
+				{# Footer común a todo el sitio: contenido fijo escrito a mano (no viene de la BD) #}
 				<section id="footer">
 					<div class="container">
 						<div class="row">
@@ -161,22 +175,24 @@
 										<li><a class="icon brands fa-youtube" href="https://www.youtube.com/" target="_blank" rel="noopener"><span class="label">YouTube</span></a></li>
 										<li><a class="icon brands fa-whatsapp" href="https://www.whatsapp.com/" target="_blank" rel="noopener"><span class="label">WhatsApp</span></a></li>
 									</ul>
+									{# Datos del negocio: vienen de la BD a través del procesador de contexto info/processors.py #}
+									{# (se editan en el panel, en "Datos del negocio"). No hace falta pasarlos desde cada vista. #}
 									<ul class="contact">
 										<li>
 											<h3>Dirección</h3>
 											<p>
 												Plantas Edén<br />
-												Av. Pedro de Valdivia 1215<br />
-												Providencia, Santiago
+												{{ INFO_DIRECCION }}
 											</p>
 										</li>
 										<li>
 											<h3>Correo</h3>
-											<p><a href="mailto:contacto@plantaseden.cl">contacto@plantaseden.cl</a></p>
+											<p><a href="mailto:{{ INFO_CORREO }}">{{ INFO_CORREO }}</a></p>
 										</li>
 										<li>
 											<h3>Teléfono</h3>
-											<p><a href="tel:+56223456789">+56 2 2345 6789</a></p>
+											{# cut:" " quita los espacios para que el enlace tel: quede como +56223456789 #}
+											<p><a href="tel:{{ INFO_TELEFONO|cut:" " }}">{{ INFO_TELEFONO }}</a></p>
 										</li>
 									</ul>
 								</section>
@@ -198,6 +214,8 @@
 		</div>
 
 		<!-- Scripts -->
+			{# JS del template Dopetrope: jQuery, menú desplegable (dropotron), detección de navegador/tamaño de pantalla y menú móvil (main.js). #}
+			{# Si se quitan, el sitio sigue cargando pero sin submenús ni menú para celular. #}
 			<script src="{% static 'core/assets/js/jquery.min.js' %}"></script>
 			<script src="{% static 'core/assets/js/jquery.dropotron.min.js' %}"></script>
 			<script src="{% static 'core/assets/js/browser.min.js' %}"></script>

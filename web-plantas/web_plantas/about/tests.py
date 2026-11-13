@@ -1,3 +1,6 @@
+# Pruebas automáticas: se ejecutan con "python manage.py test".
+# Django crea una base de datos temporal vacía para las pruebas (no toca db.sqlite3)
+# y self.client simula un navegador que hace peticiones GET a las URLs.
 from django.test import TestCase
 from django.urls import reverse
 
@@ -13,5 +16,6 @@ class AboutViewTests(TestCase):
         self.assertContains(response, "Créditos de imágenes")
 
     def test_footer_enlaza_a_los_creditos(self):
+        # El footer de base.html enlaza a la sección #creditos de Nosotros
         response = self.client.get(reverse("home"))
         self.assertContains(response, reverse("about") + "#creditos")

@@ -1,8 +1,12 @@
+{# Página Contacto: contenido estático (escrito aquí, no viene de la BD). #}
+{# extends hereda base.html (menú, footer, CSS); este archivo solo rellena sus bloques. #}
 {% extends 'core/base.html' %}
 {% load static %}
+{# load static no se hereda: cada plantilla que use {% static %} debe cargarlo #}
 
 {% block title %}Contacto{% endblock %}
 
+{# Layout sin barra lateral #}
 {% block body_class %}no-sidebar{% endblock %}
 
 {% block content %}
@@ -27,7 +31,8 @@
 												<h3><span class="icon solid fa-map-marker-alt"></span> Dirección</h3>
 											</header>
 											<p>
-												Av. Pedro de Valdivia 1215, Providencia, Santiago.<br />
+												{# INFO_*: datos del negocio desde el procesador de contexto info/processors.py #}
+												{{ INFO_DIRECCION }}.<br />
 												A pasos de Av. Providencia y del Metro Pedro de Valdivia (Línea 1).
 											</p>
 										</section>
@@ -38,8 +43,8 @@
 												<h3><span class="icon solid fa-envelope"></span> Correo</h3>
 											</header>
 											<p>
-												Consultas y pedidos: <a href="mailto:contacto@plantaseden.cl">contacto@plantaseden.cl</a><br />
-												Eventos y talleres: <a href="mailto:eventos@plantaseden.cl">eventos@plantaseden.cl</a>
+												Consultas y pedidos: <a href="mailto:{{ INFO_CORREO }}">{{ INFO_CORREO }}</a><br />
+												Eventos y talleres: <a href="mailto:{{ INFO_CORREO_EVENTOS }}">{{ INFO_CORREO_EVENTOS }}</a>
 											</p>
 										</section>
 									</div>
@@ -49,8 +54,8 @@
 												<h3><span class="icon solid fa-phone"></span> Teléfono y WhatsApp</h3>
 											</header>
 											<p>
-												Tienda: <a href="tel:+56223456789">+56 2 2345 6789</a><br />
-												WhatsApp: <a href="https://www.whatsapp.com/" target="_blank" rel="noopener">+56 9 4521 7830</a>
+												Tienda: <a href="tel:{{ INFO_TELEFONO|cut:" " }}">{{ INFO_TELEFONO }}</a><br />
+												WhatsApp: <a href="https://www.whatsapp.com/" target="_blank" rel="noopener">{{ INFO_WHATSAPP }}</a>
 											</p>
 										</section>
 									</div>
@@ -60,16 +65,16 @@
 												<h3><span class="icon solid fa-clock"></span> Horario de atención</h3>
 											</header>
 											<p>
-												Lunes a viernes: 9:00 a 19:00<br />
-												Sábado: 10:00 a 17:00<br />
-												Domingo y festivos: 10:00 a 14:00
+												Lunes a viernes: {{ INFO_HORARIO_SEMANA }}<br />
+												Sábado: {{ INFO_HORARIO_SABADO }}<br />
+												Domingo y festivos: {{ INFO_HORARIO_DOMINGO }}
 											</p>
 										</section>
 									</div>
 								</div>
 								<footer>
 									<ul class="actions">
-										<li><a href="mailto:contacto@plantaseden.cl" class="button icon solid fa-envelope">Escríbenos un correo</a></li>
+										<li><a href="mailto:{{ INFO_CORREO }}" class="button icon solid fa-envelope">Escríbenos un correo</a></li>
 										<li><a href="https://www.whatsapp.com/" class="button alt icon brands fa-whatsapp" target="_blank" rel="noopener">Háblanos por WhatsApp</a></li>
 									</ul>
 								</footer>
