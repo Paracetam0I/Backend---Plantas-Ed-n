@@ -1,4 +1,4 @@
-{# Página Contacto: contenido estático (escrito aquí, no viene de la BD). #}
+{# Página Contacto: datos estáticos (escritos aquí, no vienen de la BD) + formulario de contacto. #}
 {# extends hereda base.html (menú, footer, CSS); este archivo solo rellena sus bloques. #}
 {% extends 'core/base.html' %}
 {% load static %}
@@ -72,6 +72,35 @@
 										</section>
 									</div>
 								</div>
+								{# Formulario de contacto (ContactForm de contact/forms.py, enviado por la vista como 'form') #}
+								<section>
+									<header>
+										<h3>Contáctanos</h3>
+									</header>
+									<form action="" method="POST">
+										{# csrf_token es obligatorio en todo formulario POST de Django #}
+										{% csrf_token %}
+										<div class="row gtr-50">
+											<div class="col-6 col-12-small">
+												<label for="{{ form.name.id_for_label }}">Nombre</label>
+												{{ form.name }}
+											</div>
+											<div class="col-6 col-12-small">
+												<label for="{{ form.email.id_for_label }}">Email</label>
+												{{ form.email }}
+											</div>
+											<div class="col-12">
+												<label for="{{ form.content.id_for_label }}">Mensaje</label>
+												{{ form.content }}
+											</div>
+											<div class="col-12">
+												<ul class="actions">
+													<li><input type="submit" value="Enviar" /></li>
+												</ul>
+											</div>
+										</div>
+									</form>
+								</section>
 								<footer>
 									<ul class="actions">
 										<li><a href="mailto:{{ INFO_CORREO }}" class="button icon solid fa-envelope">Escríbenos un correo</a></li>
