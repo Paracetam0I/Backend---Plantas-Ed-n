@@ -1,10 +1,15 @@
+{# Página Nosotros: contenido estático (escrito aquí, no viene de la BD). #}
+{# extends hereda base.html (menú, footer, CSS); este archivo solo rellena sus bloques. #}
 {% extends 'core/base.html' %}
 {% load static %}
+{# load static no se hereda: cada plantilla que use {% static %} debe cargarlo #}
 
 {% block title %}Nosotros{% endblock %}
 
+{# Layout sin barra lateral #}
 {% block body_class %}no-sidebar{% endblock %}
 
+{# CSS propio de esta página, se inserta en el <head> de base.html #}
 {% block extra_head %}
 		<style>
 			/* Créditos de imágenes: texto más pequeño y discreto */

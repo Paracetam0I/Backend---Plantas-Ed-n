@@ -1,8 +1,12 @@
+{# Página Portada: contenido estático (escrito aquí, no viene de la BD). #}
+{# extends hereda base.html (menú, footer, CSS); este archivo solo rellena sus bloques. #}
 {% extends 'core/base.html' %}
 {% load static %}
+{# load static no se hereda: cada plantilla que use {% static %} debe cargarlo #}
 
 {% block title %}Inicio{% endblock %}
 
+{# Layout "homepage" de Dopetrope (portada con banner) #}
 {% block body_class %}homepage{% endblock %}
 
 {# Banner e intro: van dentro de <section id="header">, solo en la portada #}

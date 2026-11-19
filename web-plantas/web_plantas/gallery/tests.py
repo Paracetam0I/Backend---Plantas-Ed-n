@@ -1,3 +1,6 @@
+# Pruebas automáticas: se ejecutan con "python manage.py test".
+# Django crea una base de datos temporal vacía para las pruebas (no toca db.sqlite3)
+# y self.client simula un navegador que hace peticiones GET a las URLs.
 from django.test import TestCase
 from django.urls import reverse
 

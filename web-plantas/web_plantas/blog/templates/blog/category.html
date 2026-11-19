@@ -1,0 +1,52 @@
+{# Página de una categoría: misma tarjeta del blog, pero solo con los posts de esa categoría y sin paginación. #}
+{# La vista solo envía "category"; los posts se obtienen desde ella con la relación inversa del ManyToMany. #}
+{% extends 'core/base.html' %}
+
+{# {{ category }} imprime el __str__ de Category (su nombre) #}
+{% block title %}{{ category }}{% endblock %}
+
+{% block body_class %}no-sidebar{% endblock %}
+
+{% block content %}
+						<article class="box post">
+							<header>
+								<h2>{{ category }}</h2>
+								<p>Publicaciones del blog en esta categoría</p>
+							</header>
+							<ul class="actions">
+								<li><a href="{% url 'blog' %}" class="button alt">&laquo; Volver al blog</a></li>
+							</ul>
+						</article>
+
+						{# category.post_set.all: Django crea "post_set" en Category porque Post tiene un ManyToMany hacia ella. #}
+						{# Trae los posts de la categoría ya ordenados por Meta.ordering de Post (-published). #}
+						{% for p in category.post_set.all %}
+						<article class="box post">
+							{% if p.image %}
+							<span class="image featured"><img src="{{ p.image.url }}" alt="{{ p.title }}" /></span>
+							{% endif %}
+							<header>
+								<h2>{{ p.title }}</h2>
+								<p>{{ p.subtitle }}</p>
+							</header>
+							<p>
+								<span class="icon solid fa-user"></span> {{ p.author }}
+								&nbsp;&middot;&nbsp;
+								<span class="icon solid fa-calendar-alt"></span> {{ p.published|date:"SHORT_DATE_FORMAT" }}
+							</p>
+							{# Un post puede tener varias categorías: se muestran todas como enlaces #}
+							<p>
+								<span class="icon solid fa-tag"></span>
+								{% for c in p.categories.all %}
+								<span><a href="{% url 'category' c.id %}">{{ c.name }}</a>&nbsp;</span>
+								{% endfor %}
+							</p>
+							{{ p.content|linebreaks }}
+						</article>
+						{# Categoría creada en el panel pero aún sin publicaciones #}
+						{% empty %}
+						<article class="box post">
+							<p>Todavía no hay publicaciones en esta categoría.</p>
+						</article>
+						{% endfor %}
+{% endblock %}

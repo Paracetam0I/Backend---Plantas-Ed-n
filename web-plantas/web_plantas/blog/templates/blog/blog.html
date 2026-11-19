@@ -1,8 +1,12 @@
+{# extends: hereda todo base.html (menú, footer, CSS) y solo reemplaza los bloques definidos abajo. #}
+{# Debe ser la primera etiqueta del archivo. Sin él se vería solo este fragmento, sin diseño. #}
 {% extends 'core/base.html' %}
+{# load static no se hereda: cada plantilla que use {% static %} debe cargarlo #}
 {% load static %}
 
 {% block title %}Blog{% endblock %}
 
+{# Layout de Dopetrope con barra lateral a la izquierda #}
 {% block body_class %}left-sidebar{% endblock %}
 
 {% block extra_head %}
@@ -33,12 +37,13 @@
 										<header>
 											<h3>Categorías</h3>
 										</header>
-										<p>Organizamos nuestras publicaciones en cuatro temas principales:</p>
+										<p>Elige un tema para ver solo sus publicaciones:</p>
+										{# categories viene de la vista (Category.objects.all()): una categoría nueva creada en el panel aparece sola #}
 										<ul class="divided">
-											<li>Plantas de interior</li>
-											<li>Plantas de exterior</li>
-											<li>Semillas de temporada</li>
-											<li>Cuidados y consejos</li>
+											{% for c in categories %}
+											{# {% url 'category' c.id %} arma /category/<id>/ con la ruta name="category" de urls.py #}
+											<li><a href="{% url 'category' c.id %}">{{ c.name }}</a></li>
+											{% endfor %}
 										</ul>
 										<footer>
 											<a href="{% url 'gallery' %}" class="button alt">Ver catálogo</a>
@@ -50,22 +55,33 @@
 
 								<!-- Content -->
 									{# Recorre las publicaciones de la página actual (Page de Paginator, 3 por página) #}
+									{# "posts" viene del contexto de la vista: render(request, ..., {'posts': posts}) #}
 									{% for p in posts %}
 									<article class="box post">
+										{# p.image.url = MEDIA_URL + ruta guardada -> /media/blog/foto.jpg. El if evita error si no hay imagen #}
 										{% if p.image %}
 										<span class="image featured"><img src="{{ p.image.url }}" alt="{{ p.title }}" /></span>
 										{% endif %}
 										<header>
+											{# {{ }} imprime el valor del campo; Django escapa el HTML automáticamente (evita XSS) #}
 											<h2>{{ p.title }}</h2>
 											<p>{{ p.subtitle }}</p>
 										</header>
+										{# p.author imprime el __str__ del Author relacionado (su nombre). #}
+										{# SHORT_DATE_FORMAT: formato corto del idioma activo (es-cl -> 07/10/2026) #}
 										<p>
 											<span class="icon solid fa-user"></span> {{ p.author }}
 											&nbsp;&middot;&nbsp;
-											<span class="icon solid fa-tag"></span> {{ p.get_category_display }}
-											&nbsp;&middot;&nbsp;
-											<span class="icon solid fa-calendar-alt"></span> {{ p.created|date:"j \d\e F \d\e Y" }}
+											<span class="icon solid fa-calendar-alt"></span> {{ p.published|date:"SHORT_DATE_FORMAT" }}
 										</p>
+										{# p.categories.all recorre las categorías del post (relación ManyToMany); cada una enlaza a su página #}
+										<p>
+											<span class="icon solid fa-tag"></span>
+											{% for c in p.categories.all %}
+											<span><a href="{% url 'category' c.id %}">{{ c.name }}</a>&nbsp;</span>
+											{% endfor %}
+										</p>
+										{# linebreaks convierte los saltos de línea del TextField en párrafos <p> y <br> #}
 										{{ p.content|linebreaks }}
 									</article>
 									{# Si aún no hay publicaciones se muestra un mensaje en lugar de la lista #}
@@ -86,14 +102,18 @@
 									{% endfor %}
 
 									{# Paginación: primera / anterior / página actual / siguiente / última #}
+									{# posts es un objeto Page: object_list = publicaciones de esta página. Si está vacío no se muestra la paginación #}
 									{% if posts.object_list %}
 									<section class="box paginacion">
 										<ul class="actions">
+											{# has_previous es falso en la página 1, por eso ahí no aparecen Primera/Anterior #}
 											{% if posts.has_previous %}
 											<li><a href="?page=1" class="button alt">&laquo; Primera</a></li>
 											<li><a href="?page={{ posts.previous_page_number }}" class="button alt">Anterior</a></li>
 											{% endif %}
+											{# number = página actual; paginator.num_pages = total de páginas #}
 											<li><span class="pagina-actual">Página {{ posts.number }} de {{ posts.paginator.num_pages }}</span></li>
+											{# has_next es falso en la última página. Los enlaces ?page=N los lee la vista con request.GET.get("page") #}
 											{% if posts.has_next %}
 											<li><a href="?page={{ posts.next_page_number }}" class="button">Siguiente</a></li>
 											<li><a href="?page={{ posts.paginator.num_pages }}" class="button">Última &raquo;</a></li>
